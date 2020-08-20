@@ -11,11 +11,11 @@ function App() {
     api.get('/repositories').then(response=>{
       setRepositories(response.data);
     });
-  },[repositories]);
+  },[]);
 
   async function handleAddRepository() {
     const response = await api.post('/repositories',{
-      id: "123",
+      id:"123",
       title: "Front-End ReactJS",
 	    url: "www.github.com/Jhonmt-cpu/coceitos-nodejs",
       techs: ["nodejs"]
@@ -24,17 +24,13 @@ function App() {
     const repository = response.data;
 
     setRepositories([...repositories, repository]);
-
-    console.log(repositories);
   }
 
   async function handleRemoveRepository(id) {
 
     await api.delete(`/repositories/${id}`);
 
-    const repositoryIndex = repositories.findIndex(repository => repository.id === id);
-
-    setRepositories(repositories.splice(repositoryIndex, 1));
+    setRepositories(repositories.filter(repository => repository.id !== id));
   }
 
   return (
